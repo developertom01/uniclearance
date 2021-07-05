@@ -1,9 +1,9 @@
 const express = require("express")
-const studentsOnly = require("../permissions/studentsOnly")
+const studentsOnly = require("../middleware/permissions/studentsOnly")
 const router = express.Router()
 const passport = require("passport")
 const authController = require("../controllers/authController")
-const nonStudentsOnly = require("../permissions/nonStudentsOnly")
+const nonStudentsOnly = require("../middleware/permissions/nonStudentsOnly")
 const loginValidatation = require("../middleware/validation/login")
 
 router.post(
