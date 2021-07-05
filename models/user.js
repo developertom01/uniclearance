@@ -1,4 +1,5 @@
 'use strict';
+const { UUIDV4 } = require('sequelize');
 const {
   Model
 } = require('sequelize');
@@ -9,17 +10,56 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({Student}) {
+      this.hasOne(Student,{as:'student'})
     }
+    toJSON(){
+      return {...this.get(),id:undefined}
+    }
+
   };
   User.init({
-    fullname: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.STRING
+    uuid:{
+      type:DataTypes.UUID,
+      allowNull:false,
+      defaultValue:UUIDV4
+    },
+    fullname: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:true,
+        notEmpty:true,
+      }
+    },
+    email: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:true,
+        notEmpty:true,
+        isEmail:true
+      }    
+    },
+    password: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:true,
+        notEmpty:true,
+      }
+    },
+    role: {
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull:true,
+        notEmpty:true,
+      }
+    }
   }, {
     sequelize,
+    tableName:'users',
     modelName: 'User',
   });
   return User;
