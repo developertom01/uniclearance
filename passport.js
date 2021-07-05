@@ -13,7 +13,8 @@ passport.use(new JwtStrategy({
     secretOrKey:config.appSecrete
 },
 async (payload,done)=>{
-   const user = await User.findOne({where:{uid:payload.sub}})
+    console.log(payload);
+   const user = await User.findOne({where:{uuid:payload.sub}})
    if (!user) return done(null,false,{message:"You are not authenticated"})
     return done(null,user)
 }
