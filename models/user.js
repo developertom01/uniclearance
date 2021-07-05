@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(Student,{as:'student',foreignKey:"userId"})
     }
     toJSON(){
-      return {...this.get(),id:undefined}
+      return {...this.get(),id:undefined,password:undefined}
     }
 
   };
@@ -36,10 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type:DataTypes.STRING,
       allowNull:false,
+      unique:true,
       validate:{
         notNull:true,
-        notEmpty:true
-      }    
+        notEmpty:true,
+        
+      }
+     
     },
     password: {
       type:DataTypes.STRING,

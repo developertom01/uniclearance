@@ -30,8 +30,25 @@ try {
 }
 
 
+const deleteUser = async(req,res)=>{
+    const {userId} = req.params
+    
+    try {
+      await  User.destoy({where:{uuid:userId}})
+      res.json({
+          status:'ok',
+          message:"You have successfully deleted user"
+      })
+    } catch (error) {
+        res.status(500).json("An error occurred")
+        console.log(error);
+    }
+}
+
+
 
 module.exports = {
     create,
-    index
+    index,
+    deleteUser
 }
