@@ -34,7 +34,7 @@ const deleteUser = async(req,res)=>{
     const {userId} = req.params
     
     try {
-      await  User.destoy({where:{uuid:userId}})
+      await  User.destroy({where:{uuid:userId}})
       res.json({
           status:'ok',
           message:"You have successfully deleted user"
@@ -46,9 +46,28 @@ const deleteUser = async(req,res)=>{
 }
 
 
+const updateUser = async(req,res)=>{
+    const {username,fullname} = req.body
+    console.log(req.user.dataValues);
+    const user = req.user
+    user.fullname = fullname || user.dataValues.fullname
+    user.username = username || user.dataValues.username
+    try {
+        await user.save()
+        res.json({
+            status:"success",
+            message:"You have succesfully updated"
+        })
+    } catch (error) {
+        
+    }
+   
+
+}
 
 module.exports = {
     create,
     index,
-    deleteUser
+    deleteUser,
+    updateUser
 }
