@@ -24,7 +24,7 @@ async (payload,done)=>{
 passport.use(new LocalStrategy(async(username,password,done)=>{
    const user = await User.findOne({where:{username}})
    if(!user) return done(null,false,{message:"Incorrect username"})
-   const redult = user.validatePassword(password)
+   const result = user.validatePassword(password)
    if(!result) return done(null,false,{message:"Incorrect password"})
    return done(null,user)
 }))
