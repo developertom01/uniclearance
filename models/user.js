@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       return {...this.get(),id:undefined,password:undefined}
     }
 
+    validatePassword(password){
+     return bcrypt.compareSync(password,this.getDataValue('password'))
+    }
+
   };
   User.init({
     uuid:{
