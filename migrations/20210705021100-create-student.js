@@ -13,15 +13,11 @@ module.exports = {
       allowNull:false,
       defaultValue:DataTypes.UUIDV4
     },    
-    program:{
-      type:DataTypes.STRING,
-      allowNull:false
-    },
     userId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    program:{
+    programId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },
