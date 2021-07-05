@@ -10,17 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({User}) {
-      this.belongsTo(User,{as:'user'})
+      this.belongsTo(User,{as:'user',foreignKey:'userId'})
     }
     toJSON(){
       return {...this.get(),id:undefined}
     }
   };
   Student.init({
-    studentId: {
-      type:DataTypes.STRING,
-      allowNull:false
-    },
     uuid:{
       type:DataTypes.UUID,
       allowNull:false,
@@ -31,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     userId:{
-      type:DataTypes.STRING,
+      type:DataTypes.INTEGER,
       allowNull:false
     },
     program:{

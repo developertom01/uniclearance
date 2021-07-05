@@ -1,5 +1,6 @@
 'use strict';
 const { UUIDV4 } = require('sequelize');
+const bcrypt = require("bcrypt")
 const {
   Model
 } = require('sequelize');
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({Student}) {
-      this.hasOne(Student,{as:'student'})
+      this.hasOne(Student,{as:'student',foreignKey:"userId"})
     }
     toJSON(){
       return {...this.get(),id:undefined}
@@ -61,5 +62,8 @@ module.exports = (sequelize, DataTypes) => {
     tableName:'users',
     modelName: 'User',
   });
+  User.addHook("beforeCreate",(user)=>{
+    user.password =  bcrypt.hashSync(user.password,10)
+  })
   return User;
 };
