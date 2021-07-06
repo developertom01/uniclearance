@@ -18,5 +18,7 @@ router.route("/")
     checkDuplicateStudentId,
     studentController.createUser
     )
+router.route("/:studentUid")
+.patch(passport.authenticate("jwt",{session:false}),superAdminOnly,checkDuplicateStudentId,checkDuplicatedUserName,studentController.update)
 
 module.exports =router
