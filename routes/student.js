@@ -9,6 +9,7 @@ const createStudentValidator = require("../middleware/validation/student")
 
 
 router.route("/")
+.get(studentController.index)
 .post(
     passport.authenticate("jwt",{session:false}),
     superAdminOnly,

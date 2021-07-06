@@ -2,6 +2,23 @@ const {Department,Student,User} = require("../models")
 const config = require("../config")
 
 
+const index= async (req,res)=>{
+    try {
+        const students = await Student.findAll({include:"department"})
+        res.json(students)
+        
+    } catch (error) {
+        res.status(500).json({
+            status:"error",
+            message:"Unexpected error occured"
+            
+        })
+        console.log(error);
+    }
+}
+
+
+
 const createUser = async (req,res)=>{
         const {username,fullname,password,studentId,departmentId} = req.body
         try {
@@ -47,5 +64,6 @@ const createUser = async (req,res)=>{
 }
 
 module.exports = {
-    createUser
+    createUser,
+    index
 }
