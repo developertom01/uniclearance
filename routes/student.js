@@ -20,5 +20,9 @@ router.route("/")
     )
 router.route("/:studentUid")
 .patch(passport.authenticate("jwt",{session:false}),superAdminOnly,checkDuplicateStudentId,checkDuplicatedUserName,studentController.update)
-
+.delete(
+    passport.authenticate("jwt",{session:false}),
+    superAdminOnly,
+    studentController.destroy
+)
 module.exports =router

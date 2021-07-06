@@ -113,9 +113,34 @@ const update= async(req,res)=>{
 }
 
 
+// Delete User by admins
+
+const destroy =async (req,res)=>{
+    const {studentUid} = req.params
+    try {
+        let student = await Student.findOne({where:{uuid:studentUid}})
+        if(!student) return res.status(404).json({message:"User does not exist"})
+        await User.destroy({where:{id:student.id}})
+        res.json({
+            status:"success",
+            message:"You have succesfully deleted a student",
+            data:student
+        })
+    } catch (error) {
+        res.status(500).json({
+            status:"error",
+            message:"Unexpected error occured"
+            
+        })
+        console.log(error);
+    }
+
+}
+
 
 module.exports = {
     createUser,
     index,
-    update
+    update,
+    destroy
 }
