@@ -12,7 +12,11 @@ module.exports = {
       type:DataTypes.UUID,
       allowNull:false,
       defaultValue:DataTypes.UUIDV4
-    },    
+    },
+     studentId:{
+      type:DataTypes.STRING,
+      allowNull:false
+    },   
     userId:{
       type:DataTypes.INTEGER,
       allowNull:false

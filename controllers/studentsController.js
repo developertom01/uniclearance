@@ -1,5 +1,7 @@
 const {Department,Student,User} = require("../models")
 const config = require("../config")
+
+
 const createUser = async (req,res)=>{
         const {username,fullname,password,studentId,departmentId} = req.body
         try {
@@ -16,24 +18,30 @@ const createUser = async (req,res)=>{
         })
         const student = await Student.create({
             userId:user.id,
-            studentId
+            studentId,
+            departmentId:department.id
         })
         res.status(201).json({
             status:"success",
             data :{
-                ...student,
+                ...student.dataValues,
+                id:undefined,
+                userId:undefined,
+                departmentId:undefined,
                 user:{
-                    ...user
+                    ...user.dataValues,
+                    password:undefined,
+                    id:undefined
                 }
             }
         })
     } catch (error) {
-
         res.status(500).json({
             status:"error",
             message:"Unexpected error occured"
-
+            
         })
+        console.log(error);
         
     }
 }

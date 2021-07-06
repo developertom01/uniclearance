@@ -6,6 +6,7 @@ const createStudentValidator=(req,res,next)=>{
         password:"required|string|min:6",
         username:"required|string|min:8",
         studentId:"required|string|min:8",
+        departmentId:"required|string"
 
     }
     validator(req.body,rules,{},(err,status)=>{
