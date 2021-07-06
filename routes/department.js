@@ -16,6 +16,18 @@ router.route("/")
     departmentController.create
 )
 
+router.route("/:departmentUid")
+.patch(
+    passport.authenticate("jwt",{session:false}),
+    superAdminOnly,
+    checkDeplicateDepartmentName,
+    departmentController.update
+)
+.delete(
+    passport.authenticate("jwt",{session:false}),
+    superAdminOnly,
+    departmentController.destroy
+)
 router.get("/with_students",departmentController.indexWithStudents)
 
 module.exports = router;
