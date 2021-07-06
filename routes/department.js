@@ -7,6 +7,7 @@ const createDepartmentValidator = require('../middleware/validation/department')
 const checkDeplicateDepartmentName = require('../middleware/checkDeplicateDepartmentName');
 
 router.route("/")
+.get(departmentController.index)
 .post(
     passport.authenticate("jwt",{session:false}),
     superAdminOnly,
@@ -14,5 +15,7 @@ router.route("/")
     checkDeplicateDepartmentName,
     departmentController.create
 )
+
+router.get("/with_students",departmentController.indexWithStudents)
 
 module.exports = router;
