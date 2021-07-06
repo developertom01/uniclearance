@@ -8,9 +8,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const authRouter = require("./routes/auth")
 const studentsRouter = require("./routes/student")
+const departmentsRouter = require("./routes/department")
 
 var app = express();
 require("./passport")
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,7 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
-app.use('students',studentsRouter)
+app.use('/students',studentsRouter)
+app.use('/departments',departmentsRouter)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

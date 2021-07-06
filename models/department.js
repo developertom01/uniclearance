@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate({Student}) {
       this.hasMany(Student,{foreignKey:"departmentId",as:"student"})
     }
+    toJSON(){
+      return {...this.get(),id:undefined}
+    }
   };
   Department.init({
     name: {

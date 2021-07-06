@@ -1,4 +1,4 @@
-const Student = require("../models")
+const {Student} = require("../models")
 
 module.exports = async(req,res,next)=>{
     const student = await Student.findOne({where:{studentId:req.body.studentId}})
