@@ -55,9 +55,9 @@ const update = async(req,res)=>{
 const destroy = async(req,res)=>{
     const {departmentUid} = req.params
     try {
-        const department =await  Department.findOne( {where:{uuid:departmentUid}})
+        const department =await  Department.findOne({where:{uuid:departmentUid}})
         if (!department) return res.status(401).json({message:"Department does not exist"})
-        await  Department.destroy()
+        await  Department.destroy({where:{id:department.id}})
         res.status(201).json({status:"success",message:"You have successfully deleted a department" ,data:department})
 
     } catch (error) {
