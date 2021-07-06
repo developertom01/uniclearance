@@ -19,7 +19,12 @@ router.route("/")
     studentController.createUser
     )
 router.route("/:studentUid")
-.patch(passport.authenticate("jwt",{session:false}),superAdminOnly,checkDuplicateStudentId,checkDuplicatedUserName,studentController.update)
+.patch(passport.authenticate("jwt",{session:false}),
+superAdminOnly,
+checkDuplicateStudentId,
+checkDuplicatedUserName,
+studentController.update
+)
 .delete(
     passport.authenticate("jwt",{session:false}),
     superAdminOnly,
