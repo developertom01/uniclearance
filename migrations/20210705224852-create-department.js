@@ -1,26 +1,22 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable('students', {
+    await queryInterface.createTable('departments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-    uuid:{
-      type:DataTypes.UUID,
-      allowNull:false,
-      defaultValue:DataTypes.UUIDV4
-    },    
-    userId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    },
-    departmentId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    },
+      name: {
+        type:DataTypes.STRING,
+        allowNull:false,
+      },
+      uuid: {
+        type:DataTypes.UUID,
+        defaultValue:DataTypes.UUIDV4,
+        allowNull:false
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE
@@ -32,6 +28,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable('students');
+    await queryInterface.dropTable('departments');
   }
 };

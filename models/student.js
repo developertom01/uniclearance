@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({User,Program}) {
+    static associate({User,Department}) {
       this.belongsTo(User,{as:'user',foreignKey:'userId'})
-      this.belongsTo(Program,{foreignKey:'programId',as:"program"})
+      this.belongsTo(Department,{foreignKey:'departmentId',as:"department"})
     }
     toJSON(){
-      return {...this.get(),id:undefined}
+      return {...this.get(),id:undefined,departmentId:undefined}
     }
   };
   Student.init({
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    programId:{
+    departmentId:{
       type:DataTypes.INTEGER,
       allowNull:false
     }
