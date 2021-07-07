@@ -9,7 +9,7 @@ module.exports = {
         type: DataTypes.INTEGER
       },
       departmentId: {
-        type:DataTypes.INTEGER,
+        type:DataTypes.TEXT,
         allowNull:false
       },
       uuid: {
@@ -17,7 +17,11 @@ module.exports = {
         defaultValue:DataTypes.UUIDV4,
         allowNull:false
       },
-      userId: {
+      detail: {
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      studentId: {
         type:DataTypes.INTEGER,
         allowNull:false
       },
