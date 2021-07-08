@@ -23,3 +23,5 @@ router.patch("toggle_is_cleared/",
     departmentAdminPermission,
     controller.changeAsCleared
 )
+
+module.exports = router
