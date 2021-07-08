@@ -15,7 +15,7 @@ const index= async (req,res)=>{
 const studentIssues= async(req,res)=>{
     const {studentUid} = req.params
     try {
-        const student = await Student.findOne({where:{uuid:studentId}})
+        const student = await Student.findOne({where:{uuid:studentUid}})
         if (!student) return res.status(404).json({message:"Student does not exist"})        
         const issues = await DepartmentIssue.findAll({where:{studentId:student.uuid},include:['student','department']})
         res.json(issues)
@@ -55,6 +55,7 @@ const create=async(req,res)=>{
 
 
 }
+
 
 const changeAsCleared = async (req,res)=>{
     const {issueUid} = req.params
