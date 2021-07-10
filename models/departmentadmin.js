@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User,{foreignKey:'userId',as:'user'})
       this.belongsTo(Department,{foreignKey:'departmentId',as:'department'})
     }
+    toJSON(){
+      return {...this.get(),userId:undefined,departmentId:undefined,id:undefined}
+    }
   };
   DepartmentAdmin.init({
     userId: {
