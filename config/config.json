@@ -11,8 +11,8 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
+    "username": "myprojectuser",
+    "password": "password",
     "database": "uniclearance",
     "host": "127.0.0.1",
     "dialect": "postgres"
