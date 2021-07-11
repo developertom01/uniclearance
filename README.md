@@ -9,10 +9,16 @@
 $ npm i -g sequelize-cli
 ```
 
-#### Migrate data base 
+##### Migrate data base 
 
 ```
 $ sequelize db:migrate
+```
+
+##### Install nodemon 
+
+```
+$ npm i -g nodemon
 ```
 
 #### Start dev server
