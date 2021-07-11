@@ -14,7 +14,7 @@ const index= async(req,res)=>{
 
 // Get list of department Admins
 
-const getDepartmentAdmins=(req,res)=>{
+const getDepartmentAdmins=async (req,res)=>{
     const department =await Department.findOne({uuid:req.params.departmentId})
     if (!department) return res.status(404).json({message:"Department does not exist"})
     try {
@@ -38,13 +38,14 @@ const create= async(req,res)=>{
             username,
             fullname,
             password,
-            role = config.userTypes.departmentAdmin
+            role:config.userTypes.departmentAdmin
         })
         let departmentAdmin = DepartmentAdmin.create({
             userId:user.id,
             departmentId:department.id
         })
-        departmentAdmin = DepartmentAdmin.findOne({where:{id:department.id},include:['user','department']})
+        departmentAdmin = await DepartmentAdmin.findOne({where:{id:department.id},include:['user','department']})
+        res.json({status:'success',data:departmentAdmin})
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:"Unexpected error occued"})
@@ -57,8 +58,10 @@ const create= async(req,res)=>{
 const deleteDepartentAdmin = async(req,res)=>{
     try {
         let admin = await DepartmentAdmin.findOne({uuid:req.params.adminId})
+        console.log(admin);
         if (!admin) return res.status(404).json({message:"Department admin does not exist"})
-        await User.destroy({where:{id:admin.userId}})
+        await User.destroy({where:{id:admin.dataValues.userId}})
+        await DepartmentAdmin.destroy({where:{id:admin.dataValues.id}})
         res.json({status:"success",message:"You have succefully deleted lab admin"})
     } catch (error) {
         console.log(error);
@@ -68,5 +71,8 @@ const deleteDepartentAdmin = async(req,res)=>{
 
 
 module.exports = {
-    index,create,getDepartmentAdmins,deleteDepartentAdmin
+    index,
+    create,
+    getDepartmentAdmins,
+    deleteDepartentAdmin
 }

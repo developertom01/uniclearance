@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth")
 const studentsRouter = require("./routes/student")
 const departmentsRouter = require("./routes/department")
 const departmentIssuesRouter = require("./routes/departmentIssues")
+const departmentAdminRouter = require("./routes/departmentAdmin")
 
 var app = express();
 require("./passport")
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/department_admins', departmentAdminRouter);
 app.use('/auth', authRouter);
 app.use('/students',studentsRouter)
 app.use('/departments',departmentsRouter)
