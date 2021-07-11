@@ -12,11 +12,6 @@ module.exports = {
   },
 
   down: async (queryInterface, DataTypes) => {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+   queryInterface.removeColumn('departmentAdmins','type')
   }
 };
