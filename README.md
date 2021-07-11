@@ -1,5 +1,6 @@
 # University clearance system
 #### Written with node js
+- This app uses sqlite3 in development mode and postgress in production
 
 ## Installstion (ubuntu)
 * Make sure you have node 14.x or above installed
