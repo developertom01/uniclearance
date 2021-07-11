@@ -29,4 +29,7 @@ jobs:
         username: ${{ secrets.STAGING_USERNAME }}
         password: ${{ secrets.STAGING_PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: |
+          pm2 restart 0
+          sudo systemctl restart nginx
+      
