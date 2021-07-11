@@ -31,7 +31,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd uniclearance
-          yarn install
+          npm install
           export 'NODE_ENV'='production'
           sequelize db:migrate
           pm2 restart 0 --update-env
