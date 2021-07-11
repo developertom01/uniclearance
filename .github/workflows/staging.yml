@@ -30,6 +30,9 @@ jobs:
         password: ${{ secrets.STAGING_PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          pm2 restart 0
+          cd uniclearance
+          yarn install
+          sequelize db:migrate
+          pm2 restart 0 --update-env
           sudo systemctl restart nginx
       
