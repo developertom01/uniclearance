@@ -1,3 +1,5 @@
+const {v4} = require("uuid")
+
 'use strict';
 const {
   Model
@@ -30,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     studentId: {
       type:DataTypes.INTEGER,
       allowNull:false
+    },
+    token:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      defaultValue:v4().toString().slice(0,8)
     },
     departmentId: {
       type:DataTypes.INTEGER,
