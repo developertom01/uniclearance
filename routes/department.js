@@ -16,6 +16,8 @@ router.route("/")
     departmentController.create
 )
 
+router.get("/with_info",departmentController.indexWithStudents)
+
 router.route("/:departmentUid")
 .patch(
     passport.authenticate("jwt",{session:false}),

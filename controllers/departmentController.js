@@ -13,7 +13,7 @@ const index = async(req,res)=>{
 
 const indexWithStudents = async(req,res)=>{
     try {
-        const departments = await Department.findAll({attributes:['uuid','name'],include:"students"})
+        const departments = await Department.findAll({attributes:['uuid','name'],include:['admins',"students"]})
         res.json({departments})
     } catch (error) {
         res.status(500).json({message:"Unexpected error occued"})

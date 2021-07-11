@@ -40,11 +40,11 @@ const create= async(req,res)=>{
             password,
             role:config.userTypes.departmentAdmin
         })
-        let departmentAdmin = DepartmentAdmin.create({
+        let departmentAdmin = await DepartmentAdmin.create({
             userId:user.id,
             departmentId:department.id
         })
-        departmentAdmin = await DepartmentAdmin.findOne({where:{id:department.id},include:['user','department']})
+        departmentAdmin = await DepartmentAdmin.findOne({where:{id:departmentAdmin.id},include:['user','department']})
         res.json({status:'success',data:departmentAdmin})
     } catch (error) {
         console.log(error);
