@@ -27,6 +27,13 @@ jobs:
       with:
         host: ${{ secrets.STAGING_HOST }}
         username: ${{ secrets.STAGING_USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.STAGING_PASSWORD }}
-        script: whoami
+        password: ${{ secrets.STAGING_PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd uniclearance
+          npm install
+          export 'NODE_ENV'='production'
+          sequelize db:migrate
+          pm2 restart 0 --update-env
+          sudo systemctl restart nginx
+      
