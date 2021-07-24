@@ -13,5 +13,6 @@ module.exports = {
     },
     down: async()=>{
         await User.destroy({where:{username:'superadmin'}})
+        console.log("User migrated");
     }
 }
