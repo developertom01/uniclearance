@@ -10,5 +10,8 @@ module.exports = {
             username:'superadmin',
             role: config.userTypes.superadmin
         })
+    },
+    down: async()=>{
+        await User.destroy({where:{username:'superadmin'}})
     }
 }
