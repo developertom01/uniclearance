@@ -10,6 +10,8 @@ const authRouter = require("./routes/auth")
 const studentsRouter = require("./routes/student")
 const departmentsRouter = require("./routes/department")
 const departmentIssuesRouter = require("./routes/departmentIssues")
+const departmentAdminRouter = require("./routes/departmentAdmin")
+const departmentClearanceRouter = require("./routes/departmentClearance")
 
 var app = express();
 require("./passport")
@@ -25,10 +27,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/department_admins', departmentAdminRouter);
+app.use('/department_clearance', departmentClearanceRouter);
+app.use('/department_issues',departmentIssuesRouter)
+
 app.use('/auth', authRouter);
 app.use('/students',studentsRouter)
 app.use('/departments',departmentsRouter)
-app.use('/department_issues',departmentIssuesRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

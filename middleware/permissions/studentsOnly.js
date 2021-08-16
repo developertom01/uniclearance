@@ -5,7 +5,7 @@ module.exports = (req,res,next)=>{
     return res
     .status(403).json({
         status:"error",
-        message:"Sorry you do not have permission. You are not a super admin"
+        message:"Sorry you do not have permission. You are not a student"
     })
     return next()
 

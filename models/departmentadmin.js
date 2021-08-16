@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const config = require('../config');
 module.exports = (sequelize, DataTypes) => {
   class DepartmentAdmin extends Model {
     /**
@@ -25,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     departmentId: {
       type:DataTypes.INTEGER,
       allowNull:false
+    },
+    type:{
+      type: DataTypes.STRING,
+      allowNull:false,
+      defaultValue:config.subAdminType.admin
     },
     uuid:{
       type:DataTypes.UUID,
