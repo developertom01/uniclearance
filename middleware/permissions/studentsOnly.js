@@ -1,7 +1,7 @@
 const config = require("../../config")
 
 module.exports = (req,res,next)=>{
-    if (req.user.dataValues.role !== config.userTypes.superadmin) 
+    if (req.user.dataValues.role !== config.userTypes.student) 
     return res
     .status(403).json({
         status:"error",
