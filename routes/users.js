@@ -10,8 +10,8 @@ const checkDuplicatedUserName = require('../middleware/checkDuplicatedUserName')
 router
 .route('/')
 .get(usersController.index)
-.post(passport.authenticate("jwt",{session:false}),superUserAdminOnly,checkDuplicatedUserName,createUserValidator,usersController.create)
-
+// .post(passport.authenticate("jwt",{session:false}),superUserAdminOnly,checkDuplicatedUserName,createUserValidator,usersController.create)
+.post(checkDuplicatedUserName,createUserValidator,usersController.create)
 router
 .route("/:userId")
 .delete(passport.authenticate("jwt",{session:false}),superUserAdminOnly,usersController.deleteUser)
