@@ -15,7 +15,7 @@ const index= async(req,res)=>{
 // Get list of department Admins
 
 const getDepartmentAdmins=async (req,res)=>{
-    const department =await Department.findOne({uuid:req.params.departmentId})
+    const department =await Department.findOne({where:{uuid:req.params.departmentId}})
     if (!department) return res.status(404).json({message:"Department does not exist"})
     try {
         const admins = await DepartmentAdmin.findAll({where:{departmentId:department.id},include:['user','department']})
@@ -31,7 +31,7 @@ const getDepartmentAdmins=async (req,res)=>{
 
 const create= async(req,res)=>{
     try {
-        const department =await Department.findOne({uuid:req.params.departmentId})
+        const department =await Department.findOne({where:{uuid:req.params.departmentId}})
         if (!department) return res.status(404).json({message:"Department does not exist"})
         const {username,fullname,password} = req.body
         const user = await User.create({
@@ -57,15 +57,15 @@ const create= async(req,res)=>{
 
 const deleteDepartentAdmin = async(req,res)=>{
     try {
-        let admin = await DepartmentAdmin.findOne({uuid:req.params.adminId})
-        console.log(admin);
-        if (!admin) return res.status(404).json({message:"Department admin does not exist"})
-        await User.destroy({where:{id:admin.dataValues.userId}})
+        console.log(req.params.adminId);
+        let admin = await DepartmentAdmin.findOne({where:{uuid:req.params.adminId},include:["user"]})
+        if (!admin) return res.status(404).json({detail:"Department admin does not exist"})
+        await User.destroy({where:{id:admin.dataValues.user.id}})
         await DepartmentAdmin.destroy({where:{id:admin.dataValues.id}})
-        res.json({status:"success",message:"You have succefully deleted lab admin"})
+        res.json({status:"success",message:"You have succefully deleted department admin"})
     } catch (error) {
         console.log(error);
-        return res.status(500).json({message:"Unexpected error occued"})
+        return res.status(500).json({detail:"Unexpected error occued"})
     }
 }
 

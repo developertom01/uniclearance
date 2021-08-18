@@ -5,7 +5,7 @@ const {DepartmentClearance,Department} = require("../models")
 
 const index=async(req,res)=>{
     try {
-        const clearances = DepartmentClearance.findAll({include:['student','department']})
+        const clearances = await DepartmentClearance.findAll({include:['student','department']})
         res.json(clearances)
     } catch (error) {
         res.status(500).json({message:"Unexpected error occued"})
@@ -19,7 +19,7 @@ const getDepartmentClearances=async(req,res)=>{
     try {
         const department = await Department.findOne({where:{uuid:departmentId}})
         if (!department) return res.status(404).json({message:"Department does not exist"})
-        const clearances = await DepartmentClearance.findAll({where:{departmentId:department.id},include:['student','department']})
+        const clearances = await DepartmentClearance.findAll({where:{departmentId:department.id},include:['student']})
         res.json(clearances)
     } catch (error) {
         res.status(500).json({message:"Unexpected error occued"})
