@@ -15,6 +15,12 @@ createAdminsValidator,
 controller.create
 )
 
+router.delete("/:adminId",
+passport.authenticate("jwt",{session:false}),
+libraryAdminOrSuperAdminOnly,
+controller.deleteLibraryAdmin,
+)
+
 
 
 

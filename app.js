@@ -13,6 +13,8 @@ const departmentsRouter = require("./routes/department")
 const departmentIssuesRouter = require("./routes/departmentIssues")
 const departmentAdminRouter = require("./routes/departmentAdmin")
 const departmentClearanceRouter = require("./routes/departmentClearance")
+const libraryAdminRouter = require("./routes/libraryAdmin")
+
 
 var app = express();
 require("./passport")
@@ -33,7 +35,7 @@ app.use('/users', usersRouter);
 app.use('/department_admins', departmentAdminRouter);
 app.use('/department_clearance', departmentClearanceRouter);
 app.use('/department_issues',departmentIssuesRouter)
-
+app.use('/library_admin',libraryAdminRouter)
 app.use('/auth', authRouter);
 app.use('/students',studentsRouter)
 app.use('/departments',departmentsRouter)

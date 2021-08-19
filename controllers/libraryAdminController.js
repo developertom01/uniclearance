@@ -2,9 +2,9 @@ const config = require("../config")
 const {LibraryAdmin,User} = require("../models")
 
 
-const index=(req,res)=>{
+const index= aw=async(req,res)=>{
     try {
-        const admins = LibraryAdmin.findAll({include:['user']})
+        const admins = await LibraryAdmin.findAll({include:['user']})
         res.json(admins)
     } catch (error) {
         res.status(500).json({message:"Unexpected error occued"})
@@ -20,6 +20,7 @@ const create= async (req,res)=>{
             userId:user.id,
             type
         })
+        admin = await LibraryAdmin.findOne({where:{id:admin.id},include:["user"]})
         res.status(201).json({
             status:"success",
             body:admin
