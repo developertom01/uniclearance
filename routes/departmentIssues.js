@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const departmentAdminPermission = require("../middleware/permissions/departmentAdminsOnly");
-const departmentIssuesValidator = require("../middleware/validation/departmentIssues");
+const issuesValidator = require("../middleware/validation/issuesValidator");
 const controller = require("../controllers/departmentIsssuesController");
 
 router
@@ -10,7 +10,7 @@ router
   .post(
     passport.authenticate("jwt", { session: false }),
     departmentAdminPermission,
-    departmentIssuesValidator,
+    issuesValidator,
     controller.create
   )
   .get(controller.index);
