@@ -1,9 +1,7 @@
-const {v4} = require("uuid")
+const { v4 } = require("uuid");
 
-'use strict';
-const {
-  Model
-} = require('sequelize');
+("use strict");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class DepartmentClearance extends Model {
     /**
@@ -11,41 +9,50 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Student,Department}) {
+    static associate({ Student, Department }) {
       // define association here
-      this.belongsTo(Student,{foreignKey:"studentId",as:'student'})
-      this.belongsTo(Department,{foreignKey:'departmentId',as:'department'})
+      this.belongsTo(Student, { foreignKey: "studentId", as: "student" });
+      this.belongsTo(Department, {
+        foreignKey: "departmentId",
+        as: "department",
+      });
     }
 
-    toJSON(){
-      return {...this.get(),id:undefined,studentId:undefined,departmentId:undefined}
+    toJSON() {
+      return {
+        ...this.get(),
+        id: undefined,
+        studentId: undefined,
+        departmentId: undefined,
+      };
     }
-    
-  };
-  DepartmentClearance.init({
-    uuid: {
-      type:DataTypes.UUID,
-      allowNull:false,
-      defaultValue:DataTypes.UUIDV4
-     
+  }
+  DepartmentClearance.init(
+    {
+      uuid: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        defaultValue: DataTypes.UUIDV4,
+      },
+      studentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      token: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: v4().toString().slice(0, 8),
+      },
+      departmentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    studentId: {
-      type:DataTypes.INTEGER,
-      allowNull:false
-    },
-    token:{
-      type:DataTypes.STRING,
-      allowNull:false,
-      defaultValue:v4().toString().slice(0,8)
-    },
-    departmentId: {
-      type:DataTypes.INTEGER,
-      allowNull:false
+    {
+      sequelize,
+      tableName: "departmentClearances",
+      modelName: "DepartmentClearance",
     }
-  }, {
-    sequelize,
-    tableName:'departmentClearances',
-    modelName: 'DepartmentClearance',
-  });
+  );
   return DepartmentClearance;
 };
