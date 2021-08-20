@@ -14,6 +14,8 @@ const departmentIssuesRouter = require("./routes/departmentIssues");
 const departmentAdminRouter = require("./routes/departmentAdmin");
 const departmentClearanceRouter = require("./routes/departmentClearance");
 const libraryAdminRouter = require("./routes/libraryAdmin");
+const libraryClearanceRouter= require("./routes/libraryClearance")
+const libraryIssuesRouter = require("./routes/libraryIssues")
 
 var app = express();
 require("./passport");
@@ -27,7 +29,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+
+app.use("/libary_clearance",libraryClearanceRouter)
+app.use("/library_issues",libraryIssuesRouter)
 app.use("/users", usersRouter);
 app.use("/department_admins", departmentAdminRouter);
 app.use("/department_clearance", departmentClearanceRouter);
@@ -36,6 +40,7 @@ app.use("/library_admin", libraryAdminRouter);
 app.use("/auth", authRouter);
 app.use("/students", studentsRouter);
 app.use("/departments", departmentsRouter);
+app.use("/", indexRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

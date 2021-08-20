@@ -1,4 +1,4 @@
-const { LibraryClearance, Student } = require("../models");
+const { LibraryClearance, Student, LibraryIssue } = require("../models");
 
 const index = async (req, res) => {
   try {
@@ -17,6 +17,15 @@ const create = async (req, res) => {
 
     if (!student)
       return res.status(404).json({ detail: "User does not exist" });
+    const issues = await LibraryIssue.findAll({
+      where: { studentId: student.id, resolved: false },
+    });
+    if (issues.length > 0)
+      return res.status(403).json({
+        status: "error",
+        detail: "Clearance failed because unresolved issues were found",
+        data: issues,
+      });
     let cleared = await LibraryClearance.create({ studentId: studentId.id });
     cleared = await LibraryClearance.findOne({
       where: { id: cleared.id },
@@ -65,12 +74,10 @@ const remove = async (req, res) => {
       where: { uuid: clearanceId },
     });
     if (!cleared)
-      return res
-        .status(404)
-        .json({
-          status: "errror",
-          detail: "Library clearaane instance does not exist",
-        });
+      return res.status(404).json({
+        status: "errror",
+        detail: "Library clearaane instance does not exist",
+      });
     await LibraryClearance.destroy({ where: { id: cleared.id } });
     res.json({
       status: "success",
