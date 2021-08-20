@@ -92,7 +92,7 @@ const update = async (req, res) => {
   }
 };
 
-const deleteIssue = () => {
+const deleteIssue =async (req,res) => {
   const { issueId } = req.params;
 
   try {
