@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         as: "department",
       });
     }
+    hasIssue(){
+
+    }
     toJSON() {
       return {
         ...this.get(),

@@ -2,7 +2,7 @@ const { LibraryClearance, Student, LibraryIssue } = require("../models");
 
 const index = async (req, res) => {
   try {
-    const clearances = await LibraryClearance.findAll({ include: ["user"] });
+    const clearances = await LibraryClearance.findAll({ include: ["student"] });
     res.json(clearances);
   } catch (error) {
     res.status(500).json({ detail: "Unexpected error occued" });
@@ -16,7 +16,7 @@ const create = async (req, res) => {
     const student = await Student.findOne({ where: { uuid: studentUid } });
 
     if (!student)
-      return res.status(404).json({ detail: "User does not exist" });
+      return res.status(404).json({ detail: "student does not exist" });
     const issues = await LibraryIssue.findAll({
       where: { studentId: student.id, resolved: false },
     });
@@ -26,11 +26,13 @@ const create = async (req, res) => {
         detail: "Clearance failed because unresolved issues were found",
         data: issues,
       });
-    let cleared = await LibraryClearance.create({ studentId: studentId.id });
-    cleared = await LibraryClearance.findOne({
-      where: { id: cleared.id },
-      include: "student",
+    const clearances = await LibraryClearance.findAll({
+      where: { studentId: student.id },
     });
+    if (clearances.length > 0)
+      return res.json({ message: "Student has already signed in" });
+    let cleared = await LibraryClearance.create({ studentId: student.id });
+    cleared = await LibraryClearance.findByPk(cleared.id);
     res.status(401).json({
       status: "success",
       message: "You have successfully cleared your self from libray records",
@@ -42,6 +44,7 @@ const create = async (req, res) => {
   }
 };
 
+
 const slefClear = async (req, res) => {
   try {
     user = req.user;
@@ -51,11 +54,15 @@ const slefClear = async (req, res) => {
         status: "error",
         detail: "Student information does not exist,Contact site admin",
       });
-    let cleared = await LibraryClearance.create({ studentId: student.id });
-    cleared = await LibraryClearance.findOne({
-      where: { id: cleared.id },
-      include: "student",
+
+    const clearances = await LibraryClearance.findAll({
+      where: { studentId: student.id },
     });
+    if (clearances.length > 0)
+      return res.json({ message: "Student has already signed in" });
+
+    let cleared = await LibraryClearance.create({ studentId: student.id });
+    cleared = await LibraryClearance.findByPk(cleared.id);
     res.status(201).json({
       status: "success",
       message: "You have successfully cleared your self from libray records",
@@ -66,6 +73,7 @@ const slefClear = async (req, res) => {
     console.log(error);
   }
 };
+
 
 const remove = async (req, res) => {
   try {

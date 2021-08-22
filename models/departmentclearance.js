@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: v4().toString().slice(0, 8),
+        defaultValue: v4().slice(0, 8).toLocaleUpperCase(),
       },
       departmentId: {
         type: DataTypes.INTEGER,

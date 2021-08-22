@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { v4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class LibraryClearance extends Model {
     /**
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Student, { foreignKey: "studentId", as: "student" });
     }
     toJSON() {
-      return { ...this.get(), id: null, studentId: null };
+      return { ...this.get(), id: undefined, studentId: undefined };
     }
   }
   LibraryClearance.init(
@@ -27,8 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       token: {
         type: DataTypes.STRING,
+        unique:true,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4.toString().slice(0, 8),
+        defaultValue: v4().slice(0, 8).toLocaleUpperCase(),
       },
     },
     {
