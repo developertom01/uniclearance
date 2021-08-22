@@ -44,13 +44,12 @@ const create = async (req, res) => {
   const { detail } = req.body;
   const { studentId } = req.params;
   try {
-    const student = await Student.findOne({ where: { id: studentId } });
+    const student = await Student.findOne({ where: { uuid: studentId } });
     if (!student)
       return res.status(404).json({ detail: "Student does not exist" });
-
-    let issue = LibraryIssue.create({
+    let issue = await LibraryIssue.create({
       detail,
-      studentId,
+      studentId: student.dataValues.id,
     });
     issue = await LibraryIssue.findOne({
       where: { id: issue.id },
@@ -73,16 +72,23 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   const { issueId } = req.params;
   try {
-    const issue = await LibraryIssue.findOne({ where: { uuid: issueId } });
+    let issue = await LibraryIssue.findOne({ where: { uuid: issueId } });
     if (!issue)
       return res.status(404).json({ detail: "Library issue does not exist" });
     const { detail, resolved } = req.body;
     await LibraryIssue.update(
       { detail: detail || issue.detail, resolved: resolved || issue.resolved },
       {
-        where: { where: { id: issue.id } },
+        where:  { id: issue.id  },
       }
     );
+    issue = await LibraryIssue.findByPk(issue.id);
+    res.json({
+      status:"success",
+      data:issue
+    })
+    
+
   } catch (error) {
     res.status(500).json({
       status: "error",

@@ -12,7 +12,10 @@ router
     librayAdminOnly,
     controller.index
   )
+
+  router
   .post(
+    "/:studentId",
     passport.authenticate("jwt", { session: false }),
     librayAdminOnly,
     issuesValidator,
@@ -26,13 +29,13 @@ router.get(
   controller.retreive
 );
 router.delete(
-  "/:adminId",
+  "/:issueId",
   passport.authenticate("jwt", { session: false }),
   librayAdminOnly,
   controller.deleteIssue
 );
 router.patch(
-  "/:adminId",
+  "/:issueId",
   passport.authenticate("jwt", { session: false }),
   librayAdminOnly,
   controller.update

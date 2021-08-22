@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Student }) {
       this.belongsTo(Student, { foreignKey: "studentId", as: "student" });
     }
+    toJSON(){
+      return {...this.get(),studentId:null}
+    }
   }
   LibraryIssue.init(
     {
