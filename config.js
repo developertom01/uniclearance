@@ -4,6 +4,7 @@ module.exports = {
         libraryAdmin:'LibraryAdmin',
         departmentAdmin:'DepartmentAdmin',
         hostelAdmin:'HostelAdmin',
+        finaceAdmin:'FinanceAdmin',
         student:'Student',
 
     },
